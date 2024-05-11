@@ -176,4 +176,9 @@ class AuthController extends Controller
         ],Response::HTTP_UNAUTHORIZED);
 
     }
+
+    public function authSocket(Request $request)
+    {
+        return true;
+    }
 }

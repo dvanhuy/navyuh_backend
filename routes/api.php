@@ -49,3 +49,7 @@ Route::group(['middleware'=>[IsLogin::class],'prefix'=>'messages'], function ()
     Route::post('', [MessageController::class,'store']);
 });
 
+Route::post('/broadcasting/auth', function (Request $request) {
+    return true;
+});
+
