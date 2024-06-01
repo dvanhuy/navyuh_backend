@@ -7,9 +7,11 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserServerController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsLogin;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
-use Laravel\Sanctum\PersonalAccessToken;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,14 +53,14 @@ Route::group(['middleware'=>[IsLogin::class],'prefix'=>'messages'], function ()
 });
 
 Route::post('broadcasting/socket/auth', function (Request $request) {
-    // $tokenn = PersonalAccessToken::findToken($request->bearerToken());
-    // $user = $tokenn->tokenable;
-    // return $user;
-    return true;
-});
-Route::get('broadcasting/socket/auth', function (Request $request) {
-    // $tokenn = PersonalAccessToken::findToken($request->bearerToken());
-    // $user = $tokenn->tokenable;
-    // return $user;
-    return true;
+    $user = User::getUserFromToken($request);
+    if (!$user) {
+        return response()->json(['socket-error' => 'Unauthenticated'], 401);
+    }
+    $request->merge(['user' => $user]);
+    $request->setUserResolver(function () use ($user) {
+        return $user;
+    });
+    Auth::setUser($user);
+    return Broadcast::auth($request);
 });

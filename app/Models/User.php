@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -82,8 +83,14 @@ class User extends Authenticatable
         return false;
     }
 
-    public function getUserFromToken(Request $request){
-        $tokenn = PersonalAccessToken::findToken($request->bearerToken());
-        return $tokenn->tokenable;
+    public static function getUserFromToken(Request $request){
+        try {
+            $tokenn = PersonalAccessToken::findToken($request->bearerToken());
+            return $tokenn->tokenable;
+        } catch (\Throwable $th) {
+            Log::info($th);
+            return null;
+        }
+        
     }
 }

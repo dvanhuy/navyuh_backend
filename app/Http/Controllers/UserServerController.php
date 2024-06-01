@@ -13,11 +13,9 @@ class UserServerController extends Controller
 {
     public function index(Request $request)
     {
-        $user = new User();
-        $user = $user->getUserFromToken($request);
+        $user = User::getUserFromToken($request);
         $servers = JoiningDetails::where('user_id', $user['id'])->get();
         return response($servers);
-        // return response(Server::all());
     }
 
     public function show(Server $idserver)
@@ -27,8 +25,7 @@ class UserServerController extends Controller
 
     public function join(Request $request,Server $idserver)
     {
-        $user = new User();
-        $user = $user->getUserFromToken($request);
+        $user = User::getUserFromToken($request);
         $join = DB::table('joining_details')
         ->where('user_id',$user->id)
         ->where('server_id',$idserver->id)

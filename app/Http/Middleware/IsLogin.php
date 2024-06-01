@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class IsLogin
@@ -19,15 +21,26 @@ class IsLogin
     public function handle(Request $request, Closure $next)
     {
         try {
-            $token = PersonalAccessToken::findToken($request->bearerToken());
-            if ($token){
+            $user = User::getUserFromToken($request);
+            if ($user){
+                $request->merge(['user' => $user]);
+                $request->setUserResolver(function () use ($user) {
+                    return $user;
+                });
+                Auth::setUser($user);
                 return $next($request);
             }
+            else{
+                return response([
+                    'message'=>'Chưa đang nhập'
+                ],Response::HTTP_UNAUTHORIZED);
+            }
         } catch (\Throwable $th) {
+            return response([
+                'message'=>'Chưa đang nhập'
+            ],Response::HTTP_UNAUTHORIZED);
         }
         
-        return response([
-            'message'=>'Chưa đang nhập'
-        ],Response::HTTP_UNAUTHORIZED);
+        
     }
 }

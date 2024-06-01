@@ -11,8 +11,7 @@ class MessageController extends Controller
 {
     public function store(Request $request)
     {
-        $user = new User();
-        $user = $user->getUserFromToken($request);
+        $user = User::getUserFromToken($request);
         $check = Message::create([
             'content' => $request['message'],
             'sender_id'=>$user->id,
