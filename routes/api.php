@@ -9,6 +9,7 @@ use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\PersonalAccessToken;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +50,15 @@ Route::group(['middleware'=>[IsLogin::class],'prefix'=>'messages'], function ()
     Route::post('', [MessageController::class,'store']);
 });
 
-Route::post('/broadcasting/auth', function (Request $request) {
+Route::post('broadcasting/socket/auth', function (Request $request) {
+    // $tokenn = PersonalAccessToken::findToken($request->bearerToken());
+    // $user = $tokenn->tokenable;
+    // return $user;
     return true;
 });
-
+Route::get('broadcasting/socket/auth', function (Request $request) {
+    // $tokenn = PersonalAccessToken::findToken($request->bearerToken());
+    // $user = $tokenn->tokenable;
+    // return $user;
+    return true;
+});
