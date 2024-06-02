@@ -1,6 +1,6 @@
 {
 	"authHost": "http://nginx:80",
-	"authEndpoint": "/api/broadcasting/auth",
+	"authEndpoint": "/api/broadcasting/socket/auth",
 	"clients": [],
 	"database": "redis",
 	"databaseConfig": {

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\ServerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BroadcastingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UserServerController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsLogin;
@@ -26,41 +28,39 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login']);
 Route::get('login/google', [AuthController::class, 'redirectGoogleLogin']);
 Route::get('login/google/callback', [AuthController::class, 'callbackGoogleLogin']);
-
 Route::post('register', [AuthController::class, 'register']);
 Route::get('register/verify', [AuthController::class, 'verify']);
 Route::post('forgot-password', [AuthController::class, 'sendEmailResetPassword']);
 Route::post('reset-password', [AuthController::class, 'resetPassword']);
+Route::get('posts', [PostsController::class, 'index']);
 
-//'middleware'=>'cors',
 Route::group(['middleware'=>[IsAdmin::class],'prefix'=>'admin'], function () 
 {
     Route::apiResource('categorys',CategoryController::class);
     Route::apiResource('servers',ServerController::class);
 });
 
-
-Route::group(['middleware'=>[IsLogin::class],'prefix'=>'servers'], function () 
+Route::group(['middleware'=>[IsLogin::class]], function () 
 {
-    Route::get('', [UserServerController::class,'index']);
-    Route::get('{idserver}', [UserServerController::class,'show']);
-    Route::get('join/{idserver}', [UserServerController::class,'join']);
-});
-
-Route::group(['middleware'=>[IsLogin::class],'prefix'=>'messages'], function () 
-{
-    Route::post('', [MessageController::class,'store']);
-});
-
-Route::post('broadcasting/socket/auth', function (Request $request) {
-    $user = User::getUserFromToken($request);
-    if (!$user) {
-        return response()->json(['socket-error' => 'Unauthenticated'], 401);
-    }
-    $request->merge(['user' => $user]);
-    $request->setUserResolver(function () use ($user) {
-        return $user;
+    Route::group(['prefix'=>'servers'], function () 
+    {
+        Route::get('', [UserServerController::class,'index']);
+        Route::get('{idserver}', [UserServerController::class,'show']);
+        Route::get('join/{idserver}', [UserServerController::class,'join']);
     });
-    Auth::setUser($user);
-    return Broadcast::auth($request);
+
+    Route::group(['prefix'=>'servers'], function () 
+    {
+        Route::get('', [UserServerController::class,'index']);
+        Route::get('{idserver}', [UserServerController::class,'show']);
+        Route::post('join/{idserver}', [UserServerController::class,'join']);
+    });
+
+    Route::group(['prefix'=>'messages'], function () 
+    {
+        Route::post('', [MessageController::class,'store']);
+    });
 });
+
+
+Route::post('broadcasting/socket/auth', [BroadcastingController::class, 'auth']);
