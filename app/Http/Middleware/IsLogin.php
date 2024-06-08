@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\ResponseHelper;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -30,17 +31,9 @@ class IsLogin
                 Auth::setUser($user);
                 return $next($request);
             }
-            else{
-                return response([
-                    'message'=>'Chưa đang nhập'
-                ],Response::HTTP_UNAUTHORIZED);
-            }
         } catch (\Throwable $th) {
-            return response([
-                'message'=>'Chưa đang nhập'
-            ],Response::HTTP_UNAUTHORIZED);
+            ResponseHelper::error('Server lỗi :'.$th,ResponseHelper::HTTP_UNAUTHORIZED);
         }
-        
-        
+        return ResponseHelper::error('Chưa đang nhập',ResponseHelper::HTTP_UNAUTHORIZED);
     }
 }

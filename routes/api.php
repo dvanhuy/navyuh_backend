@@ -46,13 +46,7 @@ Route::group(['middleware'=>[IsLogin::class]], function ()
     {
         Route::get('', [UserServerController::class,'index']);
         Route::get('{idserver}', [UserServerController::class,'show']);
-        Route::get('join/{idserver}', [UserServerController::class,'join']);
-    });
-
-    Route::group(['prefix'=>'servers'], function () 
-    {
-        Route::get('', [UserServerController::class,'index']);
-        Route::get('{idserver}', [UserServerController::class,'show']);
+        Route::get('join/{idserver}', [UserServerController::class,'getJoin']);
         Route::post('join/{idserver}', [UserServerController::class,'join']);
     });
 
@@ -62,5 +56,9 @@ Route::group(['middleware'=>[IsLogin::class]], function ()
     });
 });
 
+Route::group(['middleware'=>[IsLogin::class]], function () 
+{
+    Route::post('broadcasting/socket/auth', [BroadcastingController::class, 'auth']);
+});
 
-Route::post('broadcasting/socket/auth', [BroadcastingController::class, 'auth']);
+

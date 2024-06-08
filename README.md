@@ -15,7 +15,7 @@
 -- để thao tác với laravel trong docker dùng
     - trong folder laradock
     docker compose exec --user=laradock workspace bash
-    - bất kỳ thư mục nào
+    - bất kỳ thư mục nàoW
     docker exec -it {workspace-container-id} bash
 
 

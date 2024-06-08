@@ -23,6 +23,7 @@ class ServerFactory extends Factory
             'name' => fake()->name(),
             'password' => '',
             'creator_id' => '1',
+            'images' => fake()->imageUrl(),
             'description' => fake()->text(30)
         ];
     }

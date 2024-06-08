@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
                 'name' => 'Đinh Văn Huy',
                 'email' => 'huydinhvan13@gmail.com',
                 'email_verified_at' => now(),
+                'avatar' => fake()->imageUrl(),
                 'password' => bcrypt('12345'),
                 'role'=> 'admin',
             ]);
@@ -27,7 +28,7 @@ class UserSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin@gmail.com',
                 'email_verified_at' => now(),
-                'avatar' => 'images/avatardefault.png',
+                'avatar' => fake()->imageUrl(),
                 'password' => bcrypt('12345'),
                 'role'=> 'admin',
             ]);
@@ -35,7 +36,7 @@ class UserSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin2@gmail.com',
                 'email_verified_at' => now(),
-                'avatar' => 'images/avatardefault.png',
+                'avatar' => fake()->imageUrl(),
                 'password' => bcrypt('12345'),
                 'role'=> 'admin',
             ]);
@@ -43,7 +44,7 @@ class UserSeeder extends Seeder
                 'name' => 'client1',
                 'email' => 'client1@gmail.com',
                 'email_verified_at' => now(),
-                'avatar' => 'images/avatardefault.png',
+                'avatar' => fake()->imageUrl(),
                 'password' => bcrypt('12345'),
                 'role'=> 'client',
             ]);
@@ -51,7 +52,7 @@ class UserSeeder extends Seeder
                 'name' => 'client2',
                 'email' => 'client2@gmail.com',
                 'email_verified_at' => now(),
-                'avatar' => 'images/avatardefault.png',
+                'avatar' => fake()->imageUrl(),
                 'password' => bcrypt('12345'),
                 'role'=> 'client',
             ]);

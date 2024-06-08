@@ -24,9 +24,9 @@ class DatabaseSeeder extends Seeder
         $servers = Server::limit(10)->get();
         foreach ($servers as $server) {
             Posts::create([
-                'user_id' => '1',
-                'server_id' => Server::all()->random()->id,
-                'content' => "Join my server : {$server->name}",
+                'user_id' => User::all()->random()->id,
+                'content' => fake()->sentence(30)." <a style='color:blue;text-decoration: underline;' href='".config('app.front_end')."/servers/join/{$server->id}'>{$server->name}</a>",
+                'images'=>fake()->imageUrl(),
             ]);
         };
     }

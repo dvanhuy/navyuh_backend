@@ -14,7 +14,7 @@ class PostsController extends Controller
         try {
             return ResponseHelper::success(
                 'Lấy dữ liệu bài đăng thành công',
-                ['posts'=>Posts::paginate(30)]
+                Posts::with('author')->paginate(30)
             );
         } catch (\Throwable $th) {
             return ResponseHelper::error($th);

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('creator_id')->nullable();
             $table->text('description')->nullable();
             $table->string('findable')->nullable();
+            $table->string('images')->nullable();
             $table->string('joinable')->nullable();
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

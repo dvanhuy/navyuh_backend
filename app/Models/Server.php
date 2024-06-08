@@ -13,6 +13,7 @@ class Server extends Model
         'name',
         'password',
         'creator_id',
+        'images',
         'description',
         'findable',
         'joinable',

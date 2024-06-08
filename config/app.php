@@ -17,7 +17,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'frontend' =>env('LINK_FRONT_END','http://localhost:3000'),
+    'front_end' =>env('FRONT_URL','http://localhost:3000'),
 
     /*
     |--------------------------------------------------------------------------
