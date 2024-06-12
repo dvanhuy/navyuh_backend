@@ -48,8 +48,9 @@ Route::group(['middleware'=>[IsLogin::class]], function ()
         Route::get('{idserver}', [UserServerController::class,'show']);
         Route::get('join/{idserver}', [UserServerController::class,'getJoin']);
         Route::post('join/{idserver}', [UserServerController::class,'join']);
+        Route::get('/{serverID}/messages', [MessageController::class,'index']);
+        
     });
-
     Route::group(['prefix'=>'messages'], function () 
     {
         Route::post('', [MessageController::class,'store']);

@@ -3,7 +3,7 @@ namespace App\Helpers;
 
 class ResponseHelper
 {
-    public static function success($message = '',$payload = null, $statusCode = 200)
+    public static function success($message = 'Success',$payload = null, $statusCode = 200)
     {
         if ($payload){
             return response([

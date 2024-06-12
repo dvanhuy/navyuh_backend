@@ -1,5 +1,12 @@
 --- cách chạy ứng dụng trong docker --
 
+sau khi clone về 
+->cd laradock
+->docker-compose up -d
+
+với dev
+->docker compose exec --user=laradock workspace bash
+
 -dùng laradock bằng :
     git clone https://github.com/laradock/laradock.git
     clone vào thư mục đang chứ navyuh-backend

@@ -14,4 +14,9 @@ class JoiningDetails extends Model
         'server_id',
         'role',
     ];
+
+    public static function isServerMember($userID, $serverID)
+    {
+        return JoiningDetails::where('user_id',$userID)->where('server_id',$serverID)->exists();
+    }
 }

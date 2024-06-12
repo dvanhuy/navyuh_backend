@@ -444,15 +444,15 @@ services:
       networks:
         - frontend
         - backend
-### MailDev ##############################################
-    maildev:
-      build: ./maildev
-      ports:
-        - "${MAILDEV_HTTP_PORT}:1080"
-        - "${MAILDEV_SMTP_PORT}:1025"
-      networks:
-        - frontend
-        - backend
+# ### MailDev ##############################################
+#     maildev:
+#       build: ./maildev
+#       ports:
+#         - "${MAILDEV_HTTP_PORT}:1080"
+#         - "${MAILDEV_SMTP_PORT}:1025"
+#       networks:
+#         - frontend
+#         - backend
 ### MySQL ################################################
     mysql:
       build:
