@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class MessageImage extends Model
 {
     use HasFactory;
-
-    protected $table = 'messages';
+    protected $table = 'message_images';
     protected $fillable = [
-        'content',
-        'type',
-        'sender_id',
-        'server_id',
+        'image_url',
+        'message_id',
     ];
-    
 }

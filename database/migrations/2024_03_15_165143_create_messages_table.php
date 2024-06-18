@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->text('content');
+            $table->text('content')->nullable();
+            $table->string('type')->default('text');
             $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('server_id');
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
