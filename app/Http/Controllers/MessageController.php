@@ -28,7 +28,7 @@ class MessageController extends Controller
         }
         if($request['images']){
             $message = Message::create([
-                // 'content' => $request['content'],
+                'type'=>'images',
                 'sender_id'=>$user->id,
                 'server_id'=>$request['server_id']
             ]);
@@ -46,23 +46,24 @@ class MessageController extends Controller
                 'server_id'=>$request['server_id']
             ]);
         }
-
-        // broadcast(new MessageSent($user,$request['message']));
+        sleep(1);
+        // broadcast(new MessageSent($user,$request['content']));
         return ResponseHelper::success(
             'Gửi tin nhắn thânh công'
-        )
+        );
     }
 
-    public function index(Request $request,Server $serverID)
+    public function index(Request $request,string $serverID)
     {
         $user = $request->user();
-        $exists = JoiningDetails::isServerMember($user->id,$serverID->id);
+        $exists = JoiningDetails::isServerMember($user->id,$serverID);
         if (!$exists){
-            ResponseHelper::error('Bạn chưa tham gia vào máy chủ này',ResponseHelper::HTTP_UNAUTHORIZED);
+            return ResponseHelper::error('Bạn chưa tham gia vào máy chủ này',ResponseHelper::HTTP_UNAUTHORIZED);
         }
-        $messages = Message::where('server_id',$serverID->id)
+        $messages = Message::where('server_id',$serverID)
                             ->orderByDesc('created_at')
-                            ->orderBy('id')
+                            ->orderByDesc('id')
+                            ->with('messageImages')
                             ->paginate(20);
         return ResponseHelper::success('Get messages success',$messages);
     }
